@@ -1,0 +1,19 @@
+name: NorgeSpoof
+options:
+  bundleIdPrefix: com.example
+  deploymentTarget:
+    iOS: "17.0"
+targets:
+  NorgeSpoof:
+    type: application
+    platform: iOS
+    sources: [Sources]
+    info:
+      path: Sources/Info.plist
+      properties:
+        CFBundleDisplayName: NorgeSpoof
+        UILaunchScreen: {}
+        NSLocalNetworkUsageDescription: Needed to reach the on-device developer services over the loopback VPN.
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.example.norgespoof
+      GENERATE_INFOPLIST_FILE: NO
