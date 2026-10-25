@@ -1,0 +1,18 @@
+name: Build IPA
+on: [workflow_dispatch, push]
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - run: brew install xcodegen
+      - run: xcodegen generate
+      - run: |
+          xcodebuild -project NorgeSpoof.xcodeproj -scheme NorgeSpoof \
+            -configuration Release -sdk iphoneos \
+            -derivedDataPath build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
+          mkdir -p Payload
+          cp -R build/Build/Products/Release-iphoneos/NorgeSpoof.app Payload/
+          zip -r NorgeSpoof.ipa Payload
+      - uses: actions/upload-artifact@v4
+        with: { name: NorgeSpoof-ipa, path: NorgeSpoof.ipa }
